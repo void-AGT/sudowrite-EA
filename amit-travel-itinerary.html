@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amit — London & Singapore, Aug 9–17</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F4EC;
+    --card:#FFFFFF;
+    --ink:#17233A;
+    --muted:#7A7266;
+    --line:#E4DFD1;
+    --london:#1F6F68;
+    --london-bg:#EAF3F1;
+    --singapore:#C1622D;
+    --singapore-bg:#FBEEE4;
+    --alert:#B23B22;
+    --alert-bg:#FBEAE3;
+    --amber:#E4A73A;
+    --navy-deep:#101A2C;
+    --navy-deep-2:#182640;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .wrap{
+    max-width:560px;
+    margin:0 auto;
+    padding:0 0 48px;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(180deg,var(--navy-deep) 0%,var(--navy-deep-2) 100%);
+    color:#F3EFE4;
+    padding:28px 20px 24px;
+    border-radius:0 0 18px 18px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:0 0 10px;
+  }
+  .hero h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:26px;
+    line-height:1.15;
+    margin:0 0 6px;
+  }
+  .hero .sub{
+    font-size:14px;
+    color:#C9C2B2;
+    margin:0 0 20px;
+  }
+  .route{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:4px;
+  }
+  .route .stop{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    flex:0 0 auto;
+  }
+  .route .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--amber);
+    margin-bottom:6px;
+  }
+  .route .code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:500;
+    color:#F3EFE4;
+  }
+  .route .seg{
+    flex:1 1 auto;
+    height:1px;
+    background:repeating-linear-gradient(90deg,#5A6478 0,#5A6478 4px,transparent 4px,transparent 8px);
+    margin:0 4px 20px;
+  }
+
+  /* ---------- NAV CHIPS ---------- */
+  .navchips{
+    display:flex;
+    gap:8px;
+    padding:14px 20px 4px;
+    overflow-x:auto;
+  }
+  .navchips a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.03em;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:99px;
+    white-space:nowrap;
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  .section{
+    padding:22px 20px 4px;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-bottom:12px;
+  }
+  .section-head .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .section-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    font-weight:600;
+    margin:0;
+  }
+  .section-head.london .tag{color:var(--london);}
+  .section-head.singapore .tag{color:var(--singapore);}
+
+  /* ---------- AT A GLANCE ---------- */
+  .glance{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .glance-row{
+    display:flex;
+    gap:12px;
+    padding:12px 16px;
+    border-left:3px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .glance-row:last-child{border-bottom:none;}
+  .glance-row.flight{border-left-color:var(--navy-deep-2);}
+  .glance-row.london{border-left-color:var(--london);}
+  .glance-row.singapore{border-left-color:var(--singapore);}
+  .glance-row.free{border-left-color:var(--line);}
+  .glance-date{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    flex:0 0 74px;
+    padding-top:1px;
+  }
+  .glance-event strong{
+    display:block;
+    font-size:14.5px;
+    font-weight:600;
+  }
+  .glance-event span{
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- HOTEL STRIP ---------- */
+  .hstrip{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .hcard-mini{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+  }
+  .hcard-mini .name{font-weight:600;font-size:14px;}
+  .hcard-mini .meta{font-size:12px;color:var(--muted);}
+  .hcard-mini .dates{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    text-align:right;
+    color:var(--ink);
+    flex:0 0 auto;
+  }
+
+  /* ---------- BOARDING PASS CARD ---------- */
+  .bpass{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    margin-bottom:10px;
+    position:relative;
+    overflow:hidden;
+  }
+  .bpass-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 16px 10px;
+  }
+  .bpass-air{
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .bpass-air .flt{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--muted);
+    font-weight:400;
+    margin-left:6px;
+  }
+  .pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.03em;
+    padding:4px 9px;
+    border-radius:99px;
+    font-weight:500;
+  }
+  .pill.pe{background:var(--london-bg);color:var(--london);}
+  .pill.biz{background:var(--singapore-bg);color:var(--singapore);}
+
+  .bpass-route{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:2px 16px 14px;
+  }
+  .bpass-route .code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:26px;
+    font-weight:600;
+    letter-spacing:.01em;
+  }
+  .bpass-route .plane{
+    flex:1;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  .perf{
+    position:relative;
+    height:1px;
+    background:repeating-linear-gradient(90deg,var(--line) 0,var(--line) 6px,transparent 6px,transparent 12px);
+    margin:0 0;
+  }
+  .perf::before,.perf::after{
+    content:"";
+    position:absolute;
+    top:-8px;
+    width:16px;height:16px;
+    background:var(--bg);
+    border-radius:50%;
+  }
+  .perf::before{left:-8px;}
+  .perf::after{right:-8px;}
+
+  .bpass-bottom{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 16px 14px;
+    font-size:12px;
+  }
+  .bpass-bottom .b-time strong{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink);
+  }
+  .bpass-bottom .b-time span{color:var(--muted);}
+  .bpass-bottom .b-dur{
+    text-align:center;
+    color:var(--muted);
+    align-self:center;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .bpass-bottom .b-time.right{text-align:right;}
+
+  .connector{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 16px 14px 30px;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .connector .line{
+    width:1px;
+    align-self:stretch;
+    background:repeating-linear-gradient(180deg,var(--line) 0,var(--line) 4px,transparent 4px,transparent 8px);
+    margin-left:8px;
+  }
+  .connector.warn{color:var(--alert);}
+  .connector strong{font-weight:600;}
+
+  .note{
+    font-size:12.5px;
+    color:var(--muted);
+    padding:0 16px 14px;
+    line-height:1.5;
+  }
+
+  /* ---------- COMMITMENT CARD ---------- */
+  .commit{
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:12px;
+  }
+  .commit.london{background:var(--london-bg);}
+  .commit.singapore{background:var(--singapore-bg);}
+  .commit .k{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .commit.london .k{color:var(--london);}
+  .commit.singapore .k{color:var(--singapore);}
+  .commit h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:17px;
+    margin:0 0 6px;
+  }
+  .commit p{
+    margin:0;
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .commit .when{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    font-weight:500;
+    margin-bottom:4px;
+  }
+
+  /* ---------- HOTEL FULL CARD ---------- */
+  .hcard{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:12px;
+  }
+  .hcard .name{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:17px;
+    font-weight:600;
+    margin:0 0 3px;
+  }
+  .hcard .addr{
+    font-size:12.5px;
+    color:var(--muted);
+    margin:0 0 12px;
+  }
+  .hcard .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 14px;
+    font-size:12.5px;
+  }
+  .hcard .grid .l{color:var(--muted);display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-family:'IBM Plex Mono',monospace;margin-bottom:2px;}
+  .hcard .grid .v{font-weight:500;}
+  .hcard .practical{
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- FREE DAY ---------- */
+  .freeday{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--card);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:12px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .freeday strong{color:var(--ink);}
+
+  /* ---------- RESTAURANTS ---------- */
+  details.rlist{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:0;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  details.rlist summary{
+    padding:13px 16px;
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  details.rlist summary::-webkit-details-marker{display:none;}
+  details.rlist summary::after{
+    content:"+";
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--muted);
+    font-size:16px;
+  }
+  details.rlist[open] summary::after{content:"–";}
+  .rtop3{
+    padding:0 16px 6px;
+  }
+  .rtop3 .ritem{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .rtop3 .ritem:last-child{border-bottom:none;}
+  .rtop3 .ritem .cuisine{color:var(--muted);font-size:12px;}
+  .rrest{
+    padding:4px 16px 14px;
+    border-top:1px solid var(--line);
+    margin-top:4px;
+  }
+  .rrest .ritem{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  .rrest .ritem span:first-child{color:var(--ink);}
+
+  /* ---------- HEADS UP ---------- */
+  .flag{
+    background:var(--alert-bg);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .flag .k{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--alert);
+    margin-bottom:5px;
+  }
+  .flag h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14.5px;
+    margin:0 0 5px;
+  }
+  .flag p{
+    margin:0;
+    font-size:12.5px;
+    color:var(--ink);
+    opacity:.85;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer{
+    padding:26px 20px 10px;
+    text-align:center;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  hr.div{
+    border:none;
+    border-top:1px solid var(--line);
+    margin:26px 20px 0;
+  }
+
+  @media(min-width:600px){
+    .wrap{padding-top:24px;}
+    .hero{border-radius:18px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="eyebrow">Travel Itinerary</p>
+    <h1>London &amp; Singapore</h1>
+    <p class="sub">Sun, Aug 9 – Mon, Aug 17, 2026 · Solo trip</p>
+    <div class="route">
+      <div class="stop"><div class="dot"></div><div class="code">HNL</div></div>
+      <div class="seg"></div>
+      <div class="stop"><div class="dot"></div><div class="code">LHR</div></div>
+      <div class="seg"></div>
+      <div class="stop"><div class="dot"></div><div class="code">SIN</div></div>
+      <div class="seg"></div>
+      <div class="stop"><div class="dot"></div><div class="code">HNL</div></div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="navchips">
+    <a href="#glance">At a glance</a>
+    <a href="#leg1">Outbound</a>
+    <a href="#london">London</a>
+    <a href="#leg2">To Singapore</a>
+    <a href="#singapore">Singapore</a>
+    <a href="#leg3">Home</a>
+    <a href="#headsup">Heads up</a>
+  </div>
+
+  <!-- AT A GLANCE -->
+  <div class="section" id="glance">
+    <div class="section-head"><span class="tag">30-second version</span></div>
+    <div class="glance">
+      <div class="glance-row flight">
+        <div class="glance-date">Sun Aug 9</div>
+        <div class="glance-event"><strong>Depart Honolulu</strong><span>7:10 AM · UA 373 → SFO → LHR</span></div>
+      </div>
+      <div class="glance-row flight">
+        <div class="glance-date">Mon Aug 10</div>
+        <div class="glance-event"><strong>Land London</strong><span>11:10 AM · Check in, Holmes Hotel</span></div>
+      </div>
+      <div class="glance-row london">
+        <div class="glance-date">Tue Aug 11</div>
+        <div class="glance-event"><strong>Private dinner — Marylebone</strong><span>7:30 PM · venue confirms 48 hrs prior</span></div>
+      </div>
+      <div class="glance-row free">
+        <div class="glance-date">Wed Aug 12</div>
+        <div class="glance-event"><strong>Free day</strong><span>Protected — nothing on the calendar</span></div>
+      </div>
+      <div class="glance-row flight">
+        <div class="glance-date">Thu Aug 13</div>
+        <div class="glance-event"><strong>Depart London</strong><span>7:25 PM · BA 11, direct overnight to SIN</span></div>
+      </div>
+      <div class="glance-row flight">
+        <div class="glance-date">Fri Aug 14</div>
+        <div class="glance-event"><strong>Land Singapore</strong><span>4:05 PM · Check in, Oasia Hotel Downtown</span></div>
+      </div>
+      <div class="glance-row free">
+        <div class="glance-date">Sat Aug 15</div>
+        <div class="glance-event"><strong>Free day</strong><span>Protected — nothing on the calendar</span></div>
+      </div>
+      <div class="glance-row singapore">
+        <div class="glance-date">Sun Aug 16</div>
+        <div class="glance-event"><strong>Keynote — Marina Bay Sands</strong><span>11:00 AM · 45 min on stage + 30 min Q&amp;A</span></div>
+      </div>
+      <div class="glance-row flight">
+        <div class="glance-date">Mon Aug 17</div>
+        <div class="glance-event"><strong>Depart Singapore → Home</strong><span>11:05 AM SIN → 10:35 AM HNL (same day)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOTELS STRIP -->
+  <div class="section">
+    <div class="section-head"><span class="tag">Where you're sleeping</span></div>
+    <div class="hstrip">
+      <div class="hcard-mini">
+        <div>
+          <div class="name">Holmes Hotel London</div>
+          <div class="meta">Marylebone · Superior Room</div>
+        </div>
+        <div class="dates">Aug 10–13<br>3 nights</div>
+      </div>
+      <div class="hcard-mini">
+        <div>
+          <div class="name">Oasia Hotel Downtown</div>
+          <div class="meta">Tanjong Pagar · Club Room</div>
+        </div>
+        <div class="dates">Aug 14–17<br>3 nights</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- LEG 1 -->
+  <div class="section" id="leg1">
+    <div class="section-head"><span class="tag">Leg 1 · Outbound</span><h2>Honolulu → London</h2></div>
+
+    <div class="bpass">
+      <div class="bpass-top">
+        <div class="bpass-air">United <span class="flt">UA 373</span></div>
+        <div class="pill pe">Premium Economy</div>
+      </div>
+      <div class="bpass-route">
+        <div class="code">HNL</div>
+        <div class="plane">✈</div>
+        <div class="code">SFO</div>
+      </div>
+      <div class="perf"></div>
+      <div class="bpass-bottom">
+        <div class="b-time"><strong>7:10 AM</strong><span>Sun, Aug 9</span></div>
+        <div class="b-dur">5h 05m</div>
+        <div class="b-time right"><strong>3:15 PM</strong><span>Sun, Aug 9</span></div>
+      </div>
+    </div>
+
+    <div class="connector warn">
+      <div class="line"></div>
+      <span><strong>1h 30m layover at SFO</strong> — tight for an international re-clear at a busy hub. See Heads Up below.</span>
+    </div>
+
+    <div class="bpass">
+      <div class="bpass-top">
+        <div class="bpass-air">United <span class="flt">UA 948</span></div>
+        <div class="pill biz">Polaris Business · Lie-flat</div>
+      </div>
+      <div class="bpass-route">
+        <div class="code">SFO</div>
+        <div class="plane">✈</div>
+        <div class="code">LHR</div>
+      </div>
+      <div class="perf"></div>
+      <div class="bpass-bottom">
+        <div class="b-time"><strong>4:50 PM</strong><span>Sun, Aug 9</span></div>
+        <div class="b-dur">10h 20m</div>
+        <div class="b-time right"><strong>11:10 AM</strong><span>Mon, Aug 10 (+1)</span></div>
+      </div>
+      <div class="note">Overnight leg — lie-flat seat booked so you can actually sleep through it.</div>
+    </div>
+  </div>
+
+  <!-- LONDON -->
+  <div class="section" id="london">
+    <div class="section-head london"><span class="tag">London</span><h2>Aug 10 – Aug 13</h2></div>
+
+    <div class="hcard">
+      <div class="name">Holmes Hotel London</div>
+      <div class="addr">83 Chiltern St, London W1U 6NF</div>
+      <div class="grid">
+        <div><span class="l">Check in</span><span class="v">Mon, Aug 10</span></div>
+        <div><span class="l">Check out</span><span class="v">Thu, Aug 13</span></div>
+        <div><span class="l">Room</span><span class="v">Superior, 1 Double</span></div>
+        <div><span class="l">Nights</span><span class="v">3</span></div>
+      </div>
+      <div class="practical">5–10 min walk to Marylebone dinner spots · desk + gym on site</div>
+    </div>
+
+    <div class="commit london">
+      <div class="k">Tuesday, Aug 11</div>
+      <div class="when">7:30 PM</div>
+      <h3>Private Dinner, Marylebone</h3>
+      <p>Six-author dinner hosted by the literary agency. Exact venue confirms 48 hrs prior — you'll have it by Sunday, Aug 9.</p>
+    </div>
+
+    <div class="freeday"><strong>Wed, Aug 12</strong> — free day, protected, no meetings.</div>
+
+    <details class="rlist">
+      <summary>Solo dinner spots near the hotel</summary>
+      <div class="rtop3">
+        <div class="ritem"><span>Lina Stores</span><span class="cuisine">Italian · walk-in counter only</span></div>
+        <div class="ritem"><span>Ottolenghi</span><span class="cuisine">Mediterranean · walk-in counter</span></div>
+        <div class="ritem"><span>Wulf &amp; Lamb</span><span class="cuisine">Plant-based · 2 min away</span></div>
+      </div>
+      <div class="rrest">
+        <div class="ritem"><span>Roti Chai</span><span>Indian</span></div>
+        <div class="ritem"><span>Dinings</span><span>Japanese</span></div>
+        <div class="ritem"><span>Fischer's</span><span>Viennese</span></div>
+        <div class="ritem"><span>Briciole</span><span>Italian</span></div>
+        <div class="ritem"><span>Opso</span><span>Greek</span></div>
+        <div class="ritem"><span>108 Brasserie</span><span>European</span></div>
+        <div class="ritem"><span>Kitchen at Holmes</span><span>Mediterranean · in-hotel</span></div>
+      </div>
+    </details>
+  </div>
+
+  <hr class="div">
+
+  <!-- LEG 2 -->
+  <div class="section" id="leg2">
+    <div class="section-head"><span class="tag">Leg 2 · Transit</span><h2>London → Singapore</h2></div>
+
+    <div class="bpass">
+      <div class="bpass-top">
+        <div class="bpass-air">British Airways <span class="flt">BA 11</span></div>
+        <div class="pill biz">Business · Lie-flat</div>
+      </div>
+      <div class="bpass-route">
+        <div class="code">LHR</div>
+        <div class="plane">✈ direct</div>
+        <div class="code">SIN</div>
+      </div>
+      <div class="perf"></div>
+      <div class="bpass-bottom">
+        <div class="b-time"><strong>7:25 PM</strong><span>Thu, Aug 13</span></div>
+        <div class="b-dur">13h 40m</div>
+        <div class="b-time right"><strong>4:05 PM</strong><span>Fri, Aug 14 (+1)</span></div>
+      </div>
+      <div class="note">Direct — every reasonable connecting option adds a midnight layover and ~6 extra hours. Not worth it.</div>
+    </div>
+  </div>
+
+  <!-- SINGAPORE -->
+  <div class="section" id="singapore">
+    <div class="section-head singapore"><span class="tag">Singapore</span><h2>Aug 14 – Aug 17</h2></div>
+
+    <div class="hcard">
+      <div class="name">Oasia Hotel Downtown</div>
+      <div class="addr">100 Peck Seah Street, Singapore 079333</div>
+      <div class="grid">
+        <div><span class="l">Check in</span><span class="v">Fri, Aug 14</span></div>
+        <div><span class="l">Check out</span><span class="v">Mon, Aug 17</span></div>
+        <div><span class="l">Room</span><span class="v">Club Room, King</span></div>
+        <div><span class="l">Nights</span><span class="v">3</span></div>
+      </div>
+      <div class="practical">~7 min drive to Marina Bay Sands · desk + gym on site</div>
+    </div>
+
+    <div class="commit singapore">
+      <div class="k">Sunday, Aug 16</div>
+      <div class="when">11:00 AM</div>
+      <h3>Keynote, Marina Bay Sands</h3>
+      <p>45 minutes on stage, then 30-minute Q&amp;A. Indie publishing tools conference, invite-only.</p>
+    </div>
+
+    <div class="freeday"><strong>Sat, Aug 15</strong> — free day, protected, no meetings.</div>
+
+    <details class="rlist">
+      <summary>Solo dinner spots near the hotel</summary>
+      <div class="rtop3">
+        <div class="ritem"><span>Tanjong Pagar Food Centre</span><span class="cuisine">Hawker · 5 min walk</span></div>
+        <div class="ritem"><span>Chef's Table by Stephan Zoisl</span><span class="cuisine">Asian fusion · strong veg options</span></div>
+        <div class="ritem"><span>Ramen Keisuke Tori King</span><span class="cuisine">Japanese ramen · in-hotel</span></div>
+      </div>
+      <div class="rrest">
+        <div class="ritem"><span>Amoy Street Food Centre</span><span>Hawker</span></div>
+        <div class="ritem"><span>The Marmalade Pantry</span><span>Café · in-hotel</span></div>
+        <div class="ritem"><span>7 Degrees C</span><span>Café · in-hotel</span></div>
+        <div class="ritem"><span>Baristart Coffee</span><span>Japanese café</span></div>
+        <div class="ritem"><span>Zhong Guo La Mian</span><span>Chinese noodles</span></div>
+        <div class="ritem"><span>Nanu Fish Soup Laksa</span><span>Singaporean</span></div>
+        <div class="ritem"><span>Hamburg Steak Keisuke</span><span>Japanese comfort food</span></div>
+      </div>
+    </details>
+  </div>
+
+  <hr class="div">
+
+  <!-- LEG 3 -->
+  <div class="section" id="leg3">
+    <div class="section-head"><span class="tag">Leg 3 · Return</span><h2>Singapore → Honolulu</h2></div>
+
+    <div class="bpass">
+      <div class="bpass-top">
+        <div class="bpass-air">ANA <span class="flt">NH 842</span></div>
+        <div class="pill biz">Business</div>
+      </div>
+      <div class="bpass-route">
+        <div class="code">SIN</div>
+        <div class="plane">✈</div>
+        <div class="code">HND</div>
+      </div>
+      <div class="perf"></div>
+      <div class="bpass-bottom">
+        <div class="b-time"><strong>11:05 AM</strong><span>Mon, Aug 17</span></div>
+        <div class="b-dur">7h 10m</div>
+        <div class="b-time right"><strong>7:15 PM</strong><span>Mon, Aug 17</span></div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="line"></div>
+      <span><strong>2h 40m layover at Tokyo (HND)</strong> — comfortable, no action needed.</span>
+    </div>
+
+    <div class="bpass">
+      <div class="bpass-top">
+        <div class="bpass-air">ANA <span class="flt">NH 186</span></div>
+        <div class="pill biz">Business · Lie-flat</div>
+      </div>
+      <div class="bpass-route">
+        <div class="code">HND</div>
+        <div class="plane">✈</div>
+        <div class="code">HNL</div>
+      </div>
+      <div class="perf"></div>
+      <div class="bpass-bottom">
+        <div class="b-time"><strong>9:55 PM</strong><span>Mon, Aug 17</span></div>
+        <div class="b-dur">7h 40m</div>
+        <div class="b-time right"><strong>10:35 AM</strong><span>Mon, Aug 17</span></div>
+      </div>
+      <div class="note">You land the same calendar day you left Singapore — that's the date line, not a typo. Real elapsed travel time is ~17.5 hours.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- HEADS UP -->
+  <div class="section" id="headsup">
+    <div class="section-head"><span class="tag">Heads up</span><h2>Two things worth knowing</h2></div>
+
+    <div class="flag">
+      <div class="k">Connection risk</div>
+      <h4>SFO layover is tight</h4>
+      <p>1h30m to deplane, clear security for an international departure, and reach the gate at one of the busier US hubs. If the first leg runs late, this is what's most likely to slip. Flagging now so it's not a surprise — no action needed from you.</p>
+    </div>
+
+    <div class="flag">
+      <div class="k">Pacing</div>
+      <h4>Fast turn after the keynote</h4>
+      <p>The keynote wraps Sunday afternoon and the flight home leaves 11:05 AM Monday — early checkout, then ~17.5 hours of travel. Worth keeping Sunday evening low-key rather than a late night out.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Full details on file — flag anything you'd like changed.
+  </div>
+
+</div>
+</body>
+</html>
